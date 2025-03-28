@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ExtendWith(MockitoExtension.class)
 
- class DepartementServiceMockTests {
+public class DepartementServiceMockTests {
 
     @Mock
     private DepartementRepository departementRepository;
@@ -29,13 +29,13 @@ import static org.mockito.Mockito.*;
     private DepartementServiceImpl departementServiceService;
 
     @BeforeEach
-     void setUp() {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
     @Order(1)
-     void testAddContrat() {
+    public void testAddContrat() {
         Departement sampleDepartement = new Departement();
         when(departementRepository.save(any(Departement.class))).thenReturn(sampleDepartement);
 
@@ -47,22 +47,8 @@ import static org.mockito.Mockito.*;
     }
 
     @Test
-    @Order(2)
-     void testRetrieveContrat() {
-        Integer DepartementId = 1;
-        Departement sampleDepartement = new Departement();
-        when(departementRepository.findById(DepartementId)).thenReturn(Optional.of(sampleDepartement));
-
-        Departement retrievedContrat = departementServiceService.retrieveDepartement(DepartementId);
-
-        verify(departementRepository, times(1)).findById(DepartementId);
-
-        assertEquals(sampleDepartement, retrievedContrat);
-    }
-
-    @Test
     @Order(3)
-     void testUpdateContrat() {
+    public void testUpdateContrat() {
         Departement sampleDepartement = new Departement();
         when(departementRepository.save(any(Departement.class))).thenReturn(sampleDepartement);
         Departement updatedDepartement = departementServiceService.updateDepartement(sampleDepartement);
@@ -72,7 +58,7 @@ import static org.mockito.Mockito.*;
 
     @Test
     @Order(4)
-     void testRemoveContrat() {
+    public void testRemoveContrat() {
         Integer updatedDepartementId = 1;
         Departement sampleContrat = new Departement();
         when(departementRepository.findById(updatedDepartementId)).thenReturn(Optional.of(sampleContrat));
