@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tn.esprit.spring.kaddem.entities.Contrat;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
@@ -31,7 +30,6 @@ class ContratServiceMockTests {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
         contrat = new Contrat();
         contrat.setIdContrat(1);
         contrat.setDateDebutContrat(new Date());

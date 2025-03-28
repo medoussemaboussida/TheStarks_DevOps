@@ -7,7 +7,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
@@ -18,88 +17,56 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ExtendWith(MockitoExtension.class)
- class EtudiantServiceMockTests {
+class EtudiantServiceMockTests {
 
     @Mock
     private EtudiantRepository etudiantRepository;
+
     @InjectMocks
     private EtudiantServiceImpl etudiantService;
 
     @BeforeEach
-     void setUp() {
-        MockitoAnnotations.initMocks(this);
+    void setUp() {
+        // Plus besoin de MockitoAnnotations.initMocks(this)
     }
 
     @Test
-     void testAddEtudiant() {
-        // Create a sample Etudiant
+    void testAddEtudiant() {
         Etudiant sampleEtudiant = new Etudiant();
-        // Set up behavior for the mock repository
         when(etudiantRepository.save(any(Etudiant.class))).thenReturn(sampleEtudiant);
-
-        // Call the service method
         Etudiant savedEtudiant = etudiantService.addEtudiant(sampleEtudiant);
-
-        // Verify that the save method of the repository was called
         verify(etudiantRepository, times(1)).save(any(Etudiant.class));
-
-        // Check if the returned Etudiant matches the one saved
         assertEquals(sampleEtudiant, savedEtudiant);
     }
 
     @Test
-     void testRetrieveEtudiant() {
-        // Create a sample Etudiant ID
+    void testRetrieveEtudiant() {
         Integer etudiantId = 1;
-        // Create a sample Etudiant
         Etudiant sampleEtudiant = new Etudiant();
-        // Set up behavior for the mock repository
         when(etudiantRepository.findById(etudiantId)).thenReturn(Optional.of(sampleEtudiant));
-
-        // Call the service method
         Etudiant retrievedEtudiant = etudiantService.retrieveEtudiant(etudiantId);
-
-        // Verify that the find method of the repository was called
         verify(etudiantRepository, times(1)).findById(etudiantId);
-
-        // Check if the returned Etudiant matches the one from the repository
         assertEquals(sampleEtudiant, retrievedEtudiant);
     }
 
     @Test
-     void testUpdateEtudiant() {
-        // Create a sample Etudiant
+    void testUpdateEtudiant() {
         Etudiant sampleEtudiant = new Etudiant();
-        // Set up behavior for the mock repository
         when(etudiantRepository.save(any(Etudiant.class))).thenReturn(sampleEtudiant);
-
-        // Call the service method
         Etudiant updatedEtudiant = etudiantService.updateEtudiant(sampleEtudiant);
-
-        // Verify that the save method of the repository was called
         verify(etudiantRepository, times(1)).save(any(Etudiant.class));
-
-        // Check if the returned Etudiant matches the one saved
         assertEquals(sampleEtudiant, updatedEtudiant);
     }
 
     @Test
-     void testRemoveEtudiant() {
-        // Create a sample Etudiant ID
+    void testRemoveEtudiant() {
         Integer etudiantId = 1;
-        // Create a sample Etudiant
         Etudiant sampleEtudiant = new Etudiant();
-        // Set up behavior for the mock repository
         when(etudiantRepository.findById(etudiantId)).thenReturn(Optional.of(sampleEtudiant));
-
-        // Call the service method
         etudiantService.removeEtudiant(etudiantId);
-
-        // Verify that the delete method of the repository was called
         verify(etudiantRepository, times(1)).delete(sampleEtudiant);
     }
 }
