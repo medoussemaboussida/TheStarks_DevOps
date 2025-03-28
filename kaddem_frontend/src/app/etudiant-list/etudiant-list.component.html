@@ -1,0 +1,19 @@
+<div class="container">
+    <h2>Liste des Étudiants</h2>
+    <table class="etudiant-table">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Option</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let etudiant of etudiants">
+          <td>{{ etudiant.nomE }}</td>
+          <td>{{ etudiant.prenomE }}</td>
+          <td>{{ etudiant.op }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
