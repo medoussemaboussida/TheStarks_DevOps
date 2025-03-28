@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
 import tn.esprit.spring.kaddem.services.EtudiantServiceImpl;
@@ -22,7 +23,7 @@ import static org.mockito.Mockito.times;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ExtendWith(MockitoExtension.class)
-class EtudiantServiceMockTests {
+public class EtudiantServicesImpMock {
 
     @Mock
     private EtudiantRepository etudiantRepository;
@@ -30,12 +31,12 @@ class EtudiantServiceMockTests {
     private EtudiantServiceImpl etudiantService;
 
     @BeforeEach
-     void setUp() {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-     void testAddEtudiant() {
+    public void testAddEtudiant() {
         // Create a sample Etudiant
         Etudiant sampleEtudiant = new Etudiant();
         // Set up behavior for the mock repository
@@ -52,7 +53,7 @@ class EtudiantServiceMockTests {
     }
 
     @Test
-     void testRetrieveEtudiant() {
+    public void testRetrieveEtudiant() {
         // Create a sample Etudiant ID
         Integer etudiantId = 1;
         // Create a sample Etudiant
@@ -71,7 +72,7 @@ class EtudiantServiceMockTests {
     }
 
     @Test
-     void testUpdateEtudiant() {
+    public void testUpdateEtudiant() {
         // Create a sample Etudiant
         Etudiant sampleEtudiant = new Etudiant();
         // Set up behavior for the mock repository
@@ -88,7 +89,7 @@ class EtudiantServiceMockTests {
     }
 
     @Test
-     void testRemoveEtudiant() {
+    public void testRemoveEtudiant() {
         // Create a sample Etudiant ID
         Integer etudiantId = 1;
         // Create a sample Etudiant

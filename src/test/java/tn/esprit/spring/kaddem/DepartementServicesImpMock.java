@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ExtendWith(MockitoExtension.class)
 
-public class DepartementServiceMockTests {
+public class DepartementServicesImpMock {
 
     @Mock
     private DepartementRepository departementRepository;
@@ -44,6 +44,19 @@ public class DepartementServiceMockTests {
         verify(departementRepository, times(1)).save(any(Departement.class));
 
         assertEquals(sampleDepartement, savedDepartement);
+    }
+
+    @Order(2)
+    public void testRetrieveContrat() {
+        Integer DepartementId = 1;
+        Departement sampleDepartement = new Departement();
+        when(departementRepository.findById(DepartementId)).thenReturn(Optional.of(sampleDepartement));
+
+        Departement retrievedContrat = departementServiceService.retrieveDepartement(DepartementId);
+
+        verify(departementRepository, times(1)).findById(DepartementId);
+
+        assertEquals(sampleDepartement, retrievedContrat);
     }
 
     @Test

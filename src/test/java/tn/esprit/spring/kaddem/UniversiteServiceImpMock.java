@@ -18,7 +18,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
- class UniversiteServiceMockTests {
+public class UniversiteServiceImpMock {
 
     @Mock
     private UniversiteRepository universiteRepository;
@@ -28,12 +28,12 @@ import static org.mockito.Mockito.*;
     private UniversiteServiceImpl universiteService;
 
     @BeforeEach
-     void setUp() {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-     void testAddUniversite() {
+    public void testAddUniversite() {
         // Create a sample Universite
         Universite sampleUniversite = new Universite();
         // Set up behavior for the mock repository
@@ -50,7 +50,7 @@ import static org.mockito.Mockito.*;
     }
 
     @Test
-     void testRetrieveUniversite() {
+    public void testRetrieveUniversite() {
         // Create a sample Universite ID
         Integer universiteId = 1;
         // Create a sample Universite
@@ -71,7 +71,7 @@ import static org.mockito.Mockito.*;
     // Add more test methods for other service methods
 
     @Test
-     void testDeleteUniversite() {
+    public void testDeleteUniversite() {
         // Create a sample Universite ID
         Integer universiteId = 1;
         // Create a sample Universite
