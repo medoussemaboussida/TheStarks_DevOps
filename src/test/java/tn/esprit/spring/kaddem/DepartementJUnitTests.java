@@ -1,36 +1,35 @@
 package tn.esprit.spring.kaddem;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import tn.esprit.spring.kaddem.entities.Departement;
 
- class DepartementJUnitTests {
+import static org.junit.jupiter.api.Assertions.*;
+
+public class DepartementJUnitTests {
 
     private Departement departement;
 
     @BeforeEach
-     void setUp() {
+    public void setUp() {
         departement = new Departement("Informatique");
+        departement.setIdDepart(1); // Initialisation manuelle
     }
 
     @Test
-     void testGetIdDepart() {
-        assertNotNull(departement.getIdDepart());
+    public void testGetIdDepart() {
+        assertNotNull(departement.getIdDepart(), "L'ID ne devrait pas être null après initialisation");
+        assertEquals(1, departement.getIdDepart(), "L'ID devrait être 1");
     }
 
     @Test
-     void testGetNomDepart() {
-        assertEquals("Informatique", departement.getNomDepart());
+    public void testGetNomDepart() {
+        assertEquals("Informatique", departement.getNomDepart(), "Le nom du département devrait être 'Informatique'");
     }
 
     @Test
-     void testSetNomDepart() {
+    public void testSetNomDepart() {
         departement.setNomDepart("Mathematiques");
-        assertEquals("Mathematiques", departement.getNomDepart());
+        assertEquals("Mathematiques", departement.getNomDepart(), "Le nom du département devrait être 'Mathematiques' après modification");
     }
 }
