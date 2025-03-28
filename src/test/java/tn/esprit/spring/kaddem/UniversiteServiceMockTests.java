@@ -7,21 +7,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import tn.esprit.spring.kaddem.entities.Universite;
 
 import tn.esprit.spring.kaddem.repositories.UniversiteRepository;
 import tn.esprit.spring.kaddem.services.UniversiteServiceImpl;
-
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class UniversiteServiceImpMock {
+ class UniversiteServiceMockTests {
 
     @Mock
     private UniversiteRepository universiteRepository;
@@ -31,12 +28,12 @@ class UniversiteServiceImpMock {
     private UniversiteServiceImpl universiteService;
 
     @BeforeEach
-    public void setUp() {
+     void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void testAddUniversite() {
+     void testAddUniversite() {
         // Create a sample Universite
         Universite sampleUniversite = new Universite();
         // Set up behavior for the mock repository
@@ -53,7 +50,7 @@ class UniversiteServiceImpMock {
     }
 
     @Test
-    public void testRetrieveUniversite() {
+     void testRetrieveUniversite() {
         // Create a sample Universite ID
         Integer universiteId = 1;
         // Create a sample Universite
@@ -74,7 +71,7 @@ class UniversiteServiceImpMock {
     // Add more test methods for other service methods
 
     @Test
-    public void testDeleteUniversite() {
+     void testDeleteUniversite() {
         // Create a sample Universite ID
         Integer universiteId = 1;
         // Create a sample Universite

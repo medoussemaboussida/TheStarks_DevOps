@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ExtendWith(MockitoExtension.class)
 
-public class DepartementServicesImpMock {
+ class DepartementServiceMockTests {
 
     @Mock
     private DepartementRepository departementRepository;
@@ -29,13 +29,13 @@ public class DepartementServicesImpMock {
     private DepartementServiceImpl departementServiceService;
 
     @BeforeEach
-    public void setUp() {
+     void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
     @Order(1)
-    public void testAddContrat() {
+     void testAddContrat() {
         Departement sampleDepartement = new Departement();
         when(departementRepository.save(any(Departement.class))).thenReturn(sampleDepartement);
 
@@ -46,8 +46,9 @@ public class DepartementServicesImpMock {
         assertEquals(sampleDepartement, savedDepartement);
     }
 
+    @Test
     @Order(2)
-    public void testRetrieveContrat() {
+     void testRetrieveContrat() {
         Integer DepartementId = 1;
         Departement sampleDepartement = new Departement();
         when(departementRepository.findById(DepartementId)).thenReturn(Optional.of(sampleDepartement));
@@ -61,7 +62,7 @@ public class DepartementServicesImpMock {
 
     @Test
     @Order(3)
-    public void testUpdateContrat() {
+     void testUpdateContrat() {
         Departement sampleDepartement = new Departement();
         when(departementRepository.save(any(Departement.class))).thenReturn(sampleDepartement);
         Departement updatedDepartement = departementServiceService.updateDepartement(sampleDepartement);
@@ -71,7 +72,7 @@ public class DepartementServicesImpMock {
 
     @Test
     @Order(4)
-    public void testRemoveContrat() {
+     void testRemoveContrat() {
         Integer updatedDepartementId = 1;
         Departement sampleContrat = new Departement();
         when(departementRepository.findById(updatedDepartementId)).thenReturn(Optional.of(sampleContrat));
