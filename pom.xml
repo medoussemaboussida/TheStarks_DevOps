@@ -72,6 +72,15 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <!-- Maven Release Plugin (Stable Version) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <distributionManagement>
