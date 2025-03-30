@@ -60,7 +60,7 @@ pipeline {
             steps {
                 echo 'Pulling ...'
                 git branch: 'oussema',
-                    url: 'https://github.com/medoussemaboussida/TheStarks_DevOps.git'
+                    url: 'https://github.com/medoussemaboussida/4twin7_TheStarks_Kaddem.git'
             }
         }
  stage('MVN CLEAN') {
