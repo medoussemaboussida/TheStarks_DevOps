@@ -22,6 +22,25 @@ pipeline {
                 sh 'mvn compile'
             }
         }
+        stage('Tests - JUnit/Mockito') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Build package') {
+            steps {
+                sh 'mvn package'
+            }
+        }
+        stage('Maven Install') {
+            steps {
+                sh 'mvn install'
+            }
+        }
+        stage('Deploy to Nexus') {
+            steps {
+                sh 'mvn deploy'
+            }
 
 }
 }
