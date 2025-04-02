@@ -38,12 +38,19 @@ pipeline {
                 sh 'mvn install'
             }
         }
+       
         stage('Nexus') {
             steps {
                 sh 'mvn deploy'
-            }}
+            }
+        }
 
-
-
-}
+        stage('SonarQube Analysis') {  
+            steps {
+                withSonarQubeEnv('scanner') { 
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }
+    }
 }
