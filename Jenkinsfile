@@ -38,7 +38,7 @@ pipeline {
                 sh 'mvn install'
             }
         }
-        stage('Deploy to Nexus') {
+        stage('Nexus') {
             steps {
                 sh 'mvn deploy'
             }
