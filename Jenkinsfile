@@ -19,7 +19,7 @@ pipeline {
         stage('SONARQUBE') {
             steps {
                 echo 'Analyse de code'
-                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=squ_3f0f9a58d9e49730f82d9051db97a0015d43a85a'
+                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=adminROU123456*'
             }
         }
         stage('MOCKITO') {
