@@ -1,9 +1,9 @@
 pipeline {
     agent any
         environment {
-
             DOCKER_CREDENTIALS_ID = credentials('docker-hub-credentials')
         }
+
 
   
   stages {
@@ -56,16 +56,19 @@ pipeline {
                 }
             }
         }
-        stage('Docker Image') {
-            steps {
-                sh 'docker build -t asmariahi/kaddem:1.0.0 .'
-            }
+stage('Docker Login') {
+    steps {
+        withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+            sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
         }
-        stage('Docker Login') {
-            steps {
-                sh 'echo $DOCKER_CREDENTIALS_ID_PSW | docker login -u $DOCKER_CREDENTIALS_ID_USR --password-stdin'
-            }
-        }
+    }
+}
+
+stage('Push Docker Image') {
+    steps {
+        sh 'docker push asmariahi/kaddem:1.0.0'
+    }
+}
 
         stage("Docker Compose") {
             steps {
