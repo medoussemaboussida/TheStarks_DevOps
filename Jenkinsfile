@@ -22,6 +22,10 @@ pipeline {
                 sh 'mvn compile'
             }
         }
-
+     stage('Tests - JUnit/Mockito') {
+            steps {
+                sh 'mvn test'
+            }
+        }
 }
 }
