@@ -1,23 +1,22 @@
 pipeline {
     agent any
   
-    stages {
-
-        stage('Checkout GIT') {
+  stages {
+        stage('Fetch Source Code') {
             steps {
-                echo 'Pulling ...'
+                echo 'Pulling latest changes...'
                 git branch: 'asma',
                     url: 'https://github.com/medoussemaboussida/4twin7_TheStarks_Kaddem.git'
             }
         }
 
- stage('MVN CLEAN') {
+ stage('Clean Workspace') {
             steps {
                 sh 'mvn clean'
             }
         }
 
-        stage('MVN COMPILE') {
+        stage('Compile Project') {
             steps {
                 sh 'mvn compile'
             }
