@@ -28,10 +28,20 @@ pipeline {
             }
         }
 
+      stage('Build package') {
+            steps {
+                sh 'mvn package'
+            }
+        }
+        stage('Maven Install') {
+            steps {
+                sh 'mvn install'
+            }
+        }
         stage('Nexus') {
             steps {
                 sh 'mvn deploy'
-            }
+            }}
 
 
 
