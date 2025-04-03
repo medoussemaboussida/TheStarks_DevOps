@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     stages {
-        // Étape pour nettoyer le workspace avant tout
         stage('Clean Workspace') {
             steps {
                 echo 'Cleaning workspace to avoid Git corruption'
@@ -28,7 +27,7 @@ pipeline {
         stage('SONARQUBE') {
             steps {
                 echo 'Analyse de code'
-                // Ajoutez la commande SonarQube avec un token valide si nécessaire
+                // Remplacez YOUR_SONAR_TOKEN par un token valide
                 sh 'mvn sonar:sonar -Dsonar.token=YOUR_SONAR_TOKEN'
             }
         }
