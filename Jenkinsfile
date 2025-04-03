@@ -3,13 +3,15 @@ pipeline {
   
     stages {
 
-        stage('Checkout GIT') {
-            steps {
-                echo 'Pulling ...'
-                git branch: 'roumaissa',
-                    url: 'https://github.com/medoussemaboussida/4twin7_TheStarks_Kaddem.git'
-            }
-        }
+     stage('Checkout GIT') {
+                 steps {
+                     echo 'Pulling from branch roumaissa...'
+                     git branch: 'roumaissa',
+                         url: 'https://github.com/medoussemaboussida/4twin7_TheStarks_Kaddem.git'
+                 }
+             }
+
+
         stage('MAVEN BUILD') {
             steps {
                 echo 'Lancement de mvn clean et mvn compile'
