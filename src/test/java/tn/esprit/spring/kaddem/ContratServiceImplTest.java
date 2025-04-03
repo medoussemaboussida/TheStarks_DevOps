@@ -18,7 +18,7 @@ import tn.esprit.spring.kaddem.entities.Specialite;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
 import tn.esprit.spring.kaddem.services.ContratServiceImpl;
 
-@SpringBootTest(properties = "spring.config.name=application-test") // Utilisation du fichier application-test.properties
+@SpringBootTest
 @TestMethodOrder(OrderAnnotation.class) // Définit l'ordre des tests
 @Transactional // Assure que chaque test s'exécute dans une transaction isolée
 class ContratServiceImplTest {

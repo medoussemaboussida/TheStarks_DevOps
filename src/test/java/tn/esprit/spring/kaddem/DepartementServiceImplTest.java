@@ -14,7 +14,7 @@ import tn.esprit.spring.kaddem.entities.Departement;
 import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 import tn.esprit.spring.kaddem.services.DepartementServiceImpl;
 
-@SpringBootTest(properties = "spring.config.name=application-test") // Use test-specific properties
+@SpringBootTest
 @TestMethodOrder(OrderAnnotation.class) // Define test order
 @Transactional // Ensure each test runs in an isolated transaction
 class DepartementServiceImplTest {
