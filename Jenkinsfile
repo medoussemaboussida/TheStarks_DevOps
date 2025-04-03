@@ -35,7 +35,7 @@ pipeline {
     stage('MOCKITO') {
                 steps {
                     echo 'Lancement de mvn test avec Mockito'
-                    sh 'mvn test -Dtest=ContratServiceMockitoTests'
+                    sh 'mvn test -Dtest=ContratServiceMockTests'
                 }
             }
 
