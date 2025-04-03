@@ -85,7 +85,7 @@ class ContratServiceImplMockTest {
 
     @Test
     @Order(3)
-    void testRetrieveContrat() {
+    void testRetrieveContrat() { //test
         Contrat contrat = new Contrat();
         contrat.setIdContrat(contratId);
 
