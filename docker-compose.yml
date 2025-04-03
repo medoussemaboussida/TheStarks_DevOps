@@ -3,7 +3,6 @@ version: '3.8'
 services:
   mysql:
     image: mysql:latest
-    container_name: mysql
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: kaddem
@@ -15,7 +14,6 @@ services:
 
   spring-boot-app:
     image: asmariahi/kaddem:1.0.0
-    container_name: spring-boot-app
     restart: on-failure
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/kaddem?createDatabaseIfNotExist=true
