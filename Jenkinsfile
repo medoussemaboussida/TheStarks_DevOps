@@ -56,6 +56,16 @@ pipeline {
                 sh 'mvn deploy'
             }
         }
+                stage('JaCoCo coverage report') {
+                     steps {
+                       step([$class: 'JacocoPublisher',
+                             execPattern: '**/target/jacoco.exec',
+                             classPattern: '**/classes',
+                             sourcePattern: '**/src',
+                              exclusionPattern: '*/target/**/,**/*Test*,**/*_javassist/**'
+                             ])
+                            }
+                }
 
 
         stage('SonarQube Analysis') {  
@@ -85,16 +95,7 @@ pipeline {
                     }
                 }
 
-                         stage('JaCoCo coverage report') {
-                                      steps {
-                                        step([$class: 'JacocoPublisher',
-                                              execPattern: '**/target/jacoco.exec',
-                                              classPattern: '**/classes',
-                                              sourcePattern: '**/src',
-                                               exclusionPattern: '*/target/**/,**/*Test*,**/*_javassist/**'
-                                              ])
-                                             }
-                                 }
+
 
     
     }
