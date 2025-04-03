@@ -56,6 +56,13 @@ pipeline {
                         sh 'docker compose up -d'
                     }
                 }
+
+                stage('Docker Push') {
+                    steps {
+                        sh 'docker push asmariahi/kaddem:1.0.0'
+                    }
+                }
+
      stage('Tests - JUnit/Mockito') {
             steps {
                 sh 'mvn test'
