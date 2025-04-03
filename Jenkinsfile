@@ -32,12 +32,14 @@ pipeline {
             }
         }
 
-        stage('MOCKITO') {
-            steps {
-                echo 'Lancement de mvn test avec Mockito'
-                sh 'mvn test'
+    stage('MOCKITO') {
+                steps {
+                    echo 'Lancement de mvn test avec Mockito'
+                    sh 'mvn test -Dtest=ContratServiceMockitoTests'
+                }
             }
-        }
+
+
 
         stage('NEXUS') {
             steps {
