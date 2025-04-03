@@ -26,22 +26,43 @@ pipeline {
                 sh 'mvn compile'
             }
         }
+
+              stage('Build package') {
+                    steps {
+                        sh 'mvn package'
+                    }
+                }
+                stage('Maven Install') {
+                    steps {
+                        sh 'mvn install'
+                    }
+                }
+
+
+
+        stage('Docker Image') {
+                    steps {
+                        sh 'docker build -t asmariahi/kaddem:1.0.0 .'
+                    }
+                }
+                stage('Docker Login') {
+                    steps {
+                        sh 'echo $DOCKER_CREDENTIALS_ID_PSW | docker login -u $DOCKER_CREDENTIALS_ID_USR --password-stdin'
+                    }
+                }
+
+                stage("Docker Compose") {
+                    steps {
+                        sh 'docker compose up -d'
+                    }
+                }
      stage('Tests - JUnit/Mockito') {
             steps {
                 sh 'mvn test'
             }
         }
 
-      stage('Build package') {
-            steps {
-                sh 'mvn package'
-            }
-        }
-        stage('Maven Install') {
-            steps {
-                sh 'mvn install'
-            }
-        }
+
        
         stage('Nexus') {
             steps {
@@ -56,22 +77,7 @@ pipeline {
                 }
             }
         }
-        stage('Docker Image') {
-            steps {
-                sh 'docker build -t asmariahi/kaddem:1.0.0 .'
-            }
-        }
-        stage('Docker Login') {
-            steps {
-                sh 'echo $DOCKER_CREDENTIALS_ID_PSW | docker login -u $DOCKER_CREDENTIALS_ID_USR --password-stdin'
-            }
-        }
 
-        stage("Docker Compose") {
-            steps {
-                sh 'docker compose up -d'
-            }
-        }
     
     }
 }
