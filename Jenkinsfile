@@ -60,7 +60,7 @@ pipeline {
 
 
 
-        stage('JaCoCo coverage report') {
+        stage('JaCoCo') {
             steps {
                 jacoco(
                     execPattern: '**/target/jacoco.exec',
