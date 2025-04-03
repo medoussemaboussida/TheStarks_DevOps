@@ -7,7 +7,7 @@ pipeline {
                  steps {
                      echo 'Pulling from branch roumaissa...'
                      git branch: 'roumaissa',
-                         url: 'https://github.com/medoussemaboussida/4twin7_TheStarks_Kaddem.git'
+                    url: 'https://github.com/medoussemaboussida/4twin7_TheStarks_Kaddem.git'
                  }
              }
 
