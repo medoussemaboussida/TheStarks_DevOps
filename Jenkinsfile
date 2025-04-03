@@ -40,27 +40,6 @@ pipeline {
 
 
 
-        stage('Docker Image') {
-                    steps {
-                        sh 'docker build -t asmariahi/kaddem:1.0.0 .'
-                    }
-                }
-                stage('Docker Login') {
-                    steps {
-                        sh 'echo $DOCKER_CREDENTIALS_ID_PSW | docker login -u $DOCKER_CREDENTIALS_ID_USR --password-stdin'
-                    }
-                }
-                stage('Docker Push') {
-                                    steps {
-                                        sh 'docker push asmariahi/kaddem:1.0.0'
-                                    }
-                                }
-
-                stage("Docker Compose") {
-                    steps {
-                        sh 'docker compose up -d'
-                    }
-                }
 
 
 
@@ -78,6 +57,7 @@ pipeline {
             }
         }
 
+
         stage('SonarQube Analysis') {  
             steps {
                 withSonarQubeEnv('scanner') { 
@@ -85,6 +65,36 @@ pipeline {
                 }
             }
         }
+
+
+        stage('Docker Image') {
+                    steps {
+                        sh 'docker build -t asmariahi/kaddem:1.0.0 .'
+                    }
+                }
+                stage('Docker Login') {
+                    steps {
+                        sh 'echo $DOCKER_CREDENTIALS_ID_PSW | docker login -u $DOCKER_CREDENTIALS_ID_USR --password-stdin'
+                    }
+                }
+
+
+                stage("Docker Compose") {
+                    steps {
+                        sh 'docker compose up -d'
+                    }
+                }
+
+                         stage('JaCoCo coverage report') {
+                                      steps {
+                                        step([$class: 'JacocoPublisher',
+                                              execPattern: '**/target/jacoco.exec',
+                                              classPattern: '**/classes',
+                                              sourcePattern: '**/src',
+                                               exclusionPattern: '*/target/**/,**/*Test*,**/*_javassist/**'
+                                              ])
+                                             }
+                                 }
 
     
     }
