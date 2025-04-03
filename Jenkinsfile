@@ -88,6 +88,12 @@ pipeline {
                     }
                 }
 
+                 stage('Docker Push') {
+                   steps {
+                     sh 'docker push asmariahi/kaddem:1.0.0'
+                           }
+                                   }
+
 
                 stage("Docker Compose") {
                     steps {
