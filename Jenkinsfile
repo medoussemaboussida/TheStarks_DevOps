@@ -2,12 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Clean Workspace') {
-            steps {
-                echo 'Cleaning workspace to avoid Git corruption'
-                deleteDir() // Supprime tout le contenu du workspace
-            }
-        }
 
         stage('Checkout GIT') {
             steps {
