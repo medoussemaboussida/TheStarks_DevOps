@@ -6,8 +6,8 @@ services:
     container_name: mysql
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE:
-      MYSQL_ROOT_PASSWORD:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=kaddem
     ports:
       - "3306:3306"
     volumes:
@@ -18,10 +18,12 @@ services:
     container_name: spring-boot-app
     restart: on-failure
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/kaddem?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME:
-      SPRING_DATASOURCE_PASSWORD:
-      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_APPLICATION_JSON: '{
+            "spring.datasource.url"  : "jdbc:mysql://mysql:3306/kaddem?createDatabaseIfNotExist=true",
+            "spring.datasource.username" : "root",
+            "spring.datasource.password" : null,
+            "spring.jpa.hibernate.ddl-auto" : "update"
+          }'
     ports:
       - "8082:8082"
     depends_on:
