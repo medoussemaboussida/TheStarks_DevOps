@@ -41,12 +41,12 @@ pipeline {
 
 
 
-        stage('NEXUS') {
-            steps {
-                echo 'Deploying artifacts to Nexus repository'
-                sh 'mvn deploy'
-            }
-        }
+     stage('NEXUS') {
+         steps {
+             echo 'Deploying artifacts to Nexus repository'
+             sh 'mvn deploy -DskipTests'
+         }
+     }
 
         stage('DOCKER IMAGE') {
             steps {
