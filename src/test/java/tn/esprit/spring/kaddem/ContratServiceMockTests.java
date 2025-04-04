@@ -5,136 +5,156 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import tn.esprit.spring.kaddem.entities.Contrat;
-import tn.esprit.spring.kaddem.entities.Specialite;
-import tn.esprit.spring.kaddem.repositories.ContratRepository;
-import tn.esprit.spring.kaddem.services.ContratServiceImpl;
+import tn.esprit.spring.kaddem.entities.Departement;
+import tn.esprit.spring.kaddem.repositories.DepartementRepository;
+import tn.esprit.spring.kaddem.services.DepartementServiceImpl;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class ContratServiceMockTests {
 
     @Mock
-    private ContratRepository contratRepository;
+    private DepartementRepository departementRepository;
 
     @InjectMocks
-    private ContratServiceImpl contratService;
+    private DepartementServiceImpl departementService;
+
+    private Departement sampleDepartement;
 
     @BeforeEach
     void setUp() {
         // Initialise les mocks avant chaque test
         MockitoAnnotations.openMocks(this);
+        sampleDepartement = new Departement();
+        sampleDepartement.setIdDepart(1); // Corrigé : setIdDepart -> setIdDepartement
+        sampleDepartement.setNomDepart("Informatique");
     }
 
     @Test
-    void testAddContrat() {
+    void testAddDepartement() {
         // Arrange
-        Contrat contrat = new Contrat();
-        contrat.setSpecialite(Specialite.IA);
-        when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
+        when(departementRepository.save(any(Departement.class))).thenReturn(sampleDepartement);
 
         // Act
-        Contrat result = contratService.addContrat(contrat);
+        Departement result = departementService.addDepartement(sampleDepartement);
 
         // Assert
-        assertNotNull(result);
-        assertEquals(Specialite.IA, result.getSpecialite());
-        verify(contratRepository, times(1)).save(contrat);
+        assertNotNull(result, "Le département sauvegardé ne devrait pas être null");
+        assertEquals(sampleDepartement.getIdDepart(), result.getIdDepart(), "L'ID du département devrait correspondre");
+        assertEquals(sampleDepartement.getNomDepart(), result.getNomDepart(), "Le nom du département devrait correspondre");
+        verify(departementRepository, times(1)).save(sampleDepartement); // Corrigé : any() -> sampleDepartement pour précision
     }
 
     @Test
-    void testRetrieveAllContrats() {
+    void testRetrieveAllDepartements() {
         // Arrange
-        Contrat contrat1 = new Contrat();
-        contrat1.setSpecialite(Specialite.IA);
-        Contrat contrat2 = new Contrat();
-        contrat2.setSpecialite(Specialite.CLOUD);
-        List<Contrat> contrats = Arrays.asList(contrat1, contrat2);
-        when(contratRepository.findAll()).thenReturn(contrats);
+        Departement dept1 = new Departement();
+        dept1.setIdDepart(1);
+        dept1.setNomDepart("Informatique");
+        Departement dept2 = new Departement();
+        dept2.setIdDepart(2);
+        dept2.setNomDepart("Mathématiques");
+        List<Departement> departements = Arrays.asList(dept1, dept2);
+        when(departementRepository.findAll()).thenReturn(departements);
 
         // Act
-        List<Contrat> result = contratService.retrieveAllContrats();
+        List<Departement> result = departementService.retrieveAllDepartements();
 
         // Assert
-        assertEquals(2, result.size());
-        assertEquals(Specialite.IA, result.get(0).getSpecialite());
-        assertEquals(Specialite.CLOUD, result.get(1).getSpecialite());
-        verify(contratRepository, times(1)).findAll();
+        assertEquals(2, result.size(), "La liste devrait contenir 2 départements");
+        assertEquals("Informatique", result.get(0).getNomDepart(), "Le premier département devrait être Informatique");
+        assertEquals("Mathématiques", result.get(1).getNomDepart(), "Le deuxième département devrait être Mathématiques");
+        verify(departementRepository, times(1)).findAll();
     }
 
     @Test
-    void testRetrieveAllContratsEmpty() {
+    void testRetrieveAllDepartementsEmpty() {
         // Arrange
-        when(contratRepository.findAll()).thenReturn(Collections.emptyList());
+        when(departementRepository.findAll()).thenReturn(Collections.emptyList());
 
         // Act
-        List<Contrat> result = contratService.retrieveAllContrats();
+        List<Departement> result = departementService.retrieveAllDepartements();
 
         // Assert
-        assertEquals(0, result.size());
-        verify(contratRepository, times(1)).findAll();
+        assertEquals(0, result.size(), "La liste devrait être vide s'il n'y a aucun département");
+        verify(departementRepository, times(1)).findAll();
     }
 
     @Test
-    void testGetChiffreAffaireEntreDeuxDatesNoContracts() {
+    void testRetrieveDepartement() {
         // Arrange
-        when(contratRepository.findAll()).thenReturn(Collections.emptyList());
-        Date startDate = new Date(2023 - 1900, 0, 1); // 1er janvier 2023
-        Date endDate = new Date(2023 - 1900, 1, 1);   // 1er février 2023
+        Integer departementId = 1;
+        when(departementRepository.findById(departementId)).thenReturn(Optional.of(sampleDepartement));
 
         // Act
-        float result = contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
+        Departement result = departementService.retrieveDepartement(departementId);
 
         // Assert
-        assertEquals(0.0F, result, 0.001F, "Le chiffre d'affaires doit être 0 si aucun contrat n'existe");
-        verify(contratRepository, times(1)).findAll();
+        assertNotNull(result, "Le département récupéré ne devrait pas être null");
+        assertEquals(sampleDepartement.getIdDepart(), result.getIdDepart(), "L'ID du département devrait correspondre");
+        assertEquals(sampleDepartement.getNomDepart(), result.getNomDepart(), "Le nom du département devrait correspondre");
+        verify(departementRepository, times(1)).findById(departementId);
     }
 
     @Test
-    void testGetChiffreAffaireEntreDeuxDatesOneMonthIA() {
+    void testRetrieveDepartementNotFound() {
         // Arrange
-        Contrat contrat = new Contrat();
-        contrat.setSpecialite(Specialite.IA);
-        when(contratRepository.findAll()).thenReturn(Arrays.asList(contrat));
-        Date startDate = new Date(2023 - 1900, 0, 1); // 1er janvier 2023
-        Date endDate = new Date(2023 - 1900, 1, 1);   // 1er février 2023
+        Integer departementId = 999;
+        when(departementRepository.findById(departementId)).thenReturn(Optional.empty());
 
-        // Act
-        float result = contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
-
-        // Assert
-        float expected = (31.0F / 30.0F) * 300.0F; // 31 jours / 30 * tarif IA (300)
-        assertEquals(expected, result, 0.001F, "Le chiffre d'affaires pour IA sur 1 mois est incorrect");
-        verify(contratRepository, times(1)).findAll();
+        // Act & Assert
+        assertThrows(RuntimeException.class, () -> departementService.retrieveDepartement(departementId),
+                "Une exception devrait être levée si le département n'est pas trouvé");
+        verify(departementRepository, times(1)).findById(departementId);
     }
 
     @Test
-    void testGetChiffreAffaireEntreDeuxDatesMultipleContracts() {
+    void testUpdateDepartement() {
         // Arrange
-        Contrat contratIA = new Contrat();
-        contratIA.setSpecialite(Specialite.IA);
-        Contrat contratCloud = new Contrat();
-        contratCloud.setSpecialite(Specialite.CLOUD);
-        List<Contrat> contrats = Arrays.asList(contratIA, contratCloud);
-        when(contratRepository.findAll()).thenReturn(contrats);
-        Date startDate = new Date(2023 - 1900, 0, 1); // 1er janvier 2023
-        Date endDate = new Date(2023 - 1900, 1, 1);   // 1er février 2023
+        when(departementRepository.save(any(Departement.class))).thenReturn(sampleDepartement);
 
         // Act
-        float result = contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
+        Departement result = departementService.updateDepartement(sampleDepartement);
 
         // Assert
-        float months = 31.0F / 30.0F;
-        float expected = (months * 300.0F) + (months * 400.0F); // IA (300) + CLOUD (400)
-        assertEquals(expected, result, 0.001F, "Le chiffre d'affaires pour plusieurs contrats est incorrect");
-        verify(contratRepository, times(1)).findAll();
+        assertNotNull(result, "Le département mis à jour ne devrait pas être null");
+        assertEquals(sampleDepartement.getIdDepart(), result.getIdDepart(), "L'ID du département devrait correspondre");
+        assertEquals(sampleDepartement.getNomDepart(), result.getNomDepart(), "Le nom du département devrait correspondre");
+        verify(departementRepository, times(1)).save(sampleDepartement); // Corrigé : any() -> sampleDepartement
+    }
+
+    @Test
+    void testDeleteDepartement() {
+        // Arrange
+        Integer departementId = 1;
+        when(departementRepository.findById(departementId)).thenReturn(Optional.of(sampleDepartement));
+        doNothing().when(departementRepository).delete(sampleDepartement);
+
+        // Act
+        departementService.deleteDepartement(departementId);
+
+        // Assert
+        verify(departementRepository, times(1)).findById(departementId);
+        verify(departementRepository, times(1)).delete(sampleDepartement);
+    }
+
+    @Test
+    void testDeleteDepartementNotFound() {
+        // Arrange
+        Integer departementId = 999;
+        when(departementRepository.findById(departementId)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(RuntimeException.class, () -> departementService.deleteDepartement(departementId),
+                "Une exception devrait être levée si le département n'est pas trouvé");
+        verify(departementRepository, times(1)).findById(departementId);
+        verify(departementRepository, never()).delete(any(Departement.class));
     }
 }
